@@ -1,7 +1,9 @@
+import time
+
 import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-
+from demo import *
 
 class TestStringFunctions:
     def test_len(self):
@@ -43,4 +45,25 @@ class TestLogIn:
 
         assert actual_url == expected_url and expected_username == actual_username
 
+
+class TestSystem:
+    def test_check_balance(self):
+        expected = 350
+        url = 'https://demo.applitools.com/'
+        selectors = ['#username', '#password', '#log-in']
+        driver = webdriver.Chrome()
+        driver.get(url)
+        driver.find_element(By.CSS_SELECTOR, selectors[0]).send_keys('hodi')
+        driver.find_element(By.CSS_SELECTOR, selectors[1]).send_keys('12345')
+        driver.find_element(By.CSS_SELECTOR, selectors[2]).click()
+        balance = driver.find_element(By.CSS_SELECTOR,'body > div > div.layout-w > div.content-w > div > div > div.element-wrapper.compact.pt-4 > div.element-box-tp > div > div > div > div.balance.hidden-mobile > div.balance-value > span:nth-child(1)').text
+        actual = int(balance[1:])
+
+        assert actual == expected
+
+    def test_balance_mid_noght(self):
+        expected = 1420
+        actual = mid_night_balance()
+
+        assert actual == expected
 
