@@ -1,7 +1,6 @@
 import pytest
 import requests
 
-
 class TestSanity:
     def test_google(self):
         url = 'https://google.com'
